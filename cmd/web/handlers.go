@@ -29,8 +29,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		// use this to create a log entry at Error level containing the error
 		// message, also including the request method and URI as attributes to
 		// assist with debugging.
-		app.logger.Error(err.Error(), "method", r.Method, "uri", r.URL.RequestURI())
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		app.serverError(w, r, err) // Use the serverError() helper.
 		return
 	}
 
@@ -40,8 +39,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		// And we also need to update the code here to use the structured logger
 		// too.
-		app.logger.Error(err.Error(), "method", r.Method, "uri", r.URL.RequestURI())
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		app.serverError(w, r, err) // Use the serverError() helper.
 	}
 }
 
